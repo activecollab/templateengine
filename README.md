@@ -1,5 +1,7 @@
 # Template Engine
 
+[![Build Status](https://travis-ci.org/activecollab/templateengine.svg?branch=master)](https://travis-ci.org/activecollab/templateengine)
+
 This package offers a single interface for interaction with multiple template engines. It ships with simple PHP template engine built in:
 
 ```php
