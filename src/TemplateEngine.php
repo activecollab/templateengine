@@ -130,6 +130,10 @@ abstract class TemplateEngine implements TemplateEngineInterface
             }
         }
 
+        if (!is_file($template_path)) {
+            throw new RuntimeException("Template '$template' does not exist");
+        }
+
         return $template_path;
     }
 }

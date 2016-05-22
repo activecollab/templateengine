@@ -9,10 +9,9 @@
 namespace ActiveCollab\TemplateEngine\TemplateEngine;
 
 use ActiveCollab\TemplateEngine\TemplateEngine;
-use RuntimeException;
 
 /**
- * @package ActiveCollab\Controller\Response\ViewResponse
+ * @package ActiveCollab\TemplateEngine\TemplateEngine
  */
 class PhpTemplateEngine extends TemplateEngine
 {
@@ -21,12 +20,7 @@ class PhpTemplateEngine extends TemplateEngine
      */
     public function &display($template, array $data = [])
     {
-        $template_path = $this->getTemplatePath($template);
-
-        if (!is_file($template_path)) {
-            throw new RuntimeException("Template '$template' does not exist");
-        }
-        $this->protectedIncludeScope($template_path, array_merge($this->getAttributes(), $data));
+        $this->protectedIncludeScope($this->getTemplatePath($template), array_merge($this->getAttributes(), $data));
 
         return $this;
     }

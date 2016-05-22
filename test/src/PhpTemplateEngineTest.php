@@ -12,7 +12,7 @@ use ActiveCollab\TemplateEngine\TemplateEngine\PhpTemplateEngine;
 
 /**
  */
-class PhpTemplateEnginetTest extends TestCase
+class PhpTemplateEngineTest extends TestCase
 {
     /**
      * @var PhpTemplateEngine
@@ -100,7 +100,7 @@ class PhpTemplateEnginetTest extends TestCase
      */
     public function testRemovalOfLeadingSlashes()
     {
-        $this->assertEquals("$this->templates_path/a-template.tpl", $this->template_engine->getTemplatePath('///////a-template.tpl'));
+        $this->assertEquals("$this->templates_path/mail/hello.php", $this->template_engine->getTemplatePath('///////mail/hello.php'));
     }
 
     /**
