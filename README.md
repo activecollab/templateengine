@@ -16,7 +16,7 @@ $template_engine->setAttributes([
 // Render template to output buffer
 $template_engine->display('/mail/hello.php', ['first_name' => 'John'])
 
-// Render template and return return output as a string
+// Render template and return output as a string
 $output = $template_engine->fetch('/mail/hello.php', ['first_name' => 'John'])
 ```
 
