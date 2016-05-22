@@ -95,4 +95,13 @@ class PhpTemplateEnginetTest extends TestCase
         $rendered_content = trim($rendered_content);
         $this->assertEquals($rendered_content, 'Hello John.');
     }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Template '../danger/danger-zone.php' does not exist
+     */
+    public function testSandboxingToTemplatesDir()
+    {
+        var_dump($this->template_engine->fetch('../danger/danger-zone.php'));
+    }
 }

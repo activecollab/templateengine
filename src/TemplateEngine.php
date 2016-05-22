@@ -10,9 +10,9 @@ namespace ActiveCollab\TemplateEngine;
 
 use Exception;
 use InvalidArgumentException;
+use RuntimeException;
 
 /**
- * @package ActiveCollab\Controller\Response
  */
 abstract class TemplateEngine implements TemplateEngineInterface
 {
@@ -120,6 +120,12 @@ abstract class TemplateEngine implements TemplateEngineInterface
      */
     public function getTemplatePath($template)
     {
-        return $this->templates_path . '/' . $template;
+        $result = realpath($this->templates_path.'/'.$template);
+
+        if ($this->templates_path != mb_substr($result, 0, mb_strlen($this->templates_path))) {
+            throw new RuntimeException("Template '$template' does not exist");
+        }
+
+        return $result;
     }
 }
