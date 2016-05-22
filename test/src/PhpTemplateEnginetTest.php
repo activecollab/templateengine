@@ -11,7 +11,6 @@ namespace ActiveCollab\TemplateEngine\Test;
 use ActiveCollab\TemplateEngine\TemplateEngine\PhpTemplateEngine;
 
 /**
- * @package ActiveCollab\TemplateEngine\Test
  */
 class PhpTemplateEnginetTest extends TestCase
 {
@@ -97,11 +96,19 @@ class PhpTemplateEnginetTest extends TestCase
     }
 
     /**
+     * Test removal of leading slash from a template name.
+     */
+    public function testRemovalOfLeadingSlashes()
+    {
+        $this->assertEquals("$this->templates_path/a-template.tpl", $this->template_engine->getTemplatePath('///////a-template.tpl'));
+    }
+
+    /**
      * @expectedException \RuntimeException
      * @expectedExceptionMessage Template '../danger/danger-zone.php' does not exist
      */
     public function testSandboxingToTemplatesDir()
     {
-        var_dump($this->template_engine->fetch('../danger/danger-zone.php'));
+        $this->template_engine->fetch('../danger/danger-zone.php');
     }
 }

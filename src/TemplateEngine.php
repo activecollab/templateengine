@@ -120,12 +120,16 @@ abstract class TemplateEngine implements TemplateEngineInterface
      */
     public function getTemplatePath($template)
     {
-        $result = realpath($this->templates_path.'/'.$template);
+        $template_path = $this->templates_path . '/' . ltrim($template, '/');
 
-        if ($this->templates_path != mb_substr($result, 0, mb_strlen($this->templates_path))) {
-            throw new RuntimeException("Template '$template' does not exist");
+        if (strpos($template_path, './')) {
+            $template_path = realpath($template_path);
+
+            if (empty($template_path) || $this->templates_path != mb_substr($template_path, 0, mb_strlen($this->templates_path))) {
+                throw new RuntimeException("Template '$template' does not exist");
+            }
         }
 
-        return $result;
+        return $template_path;
     }
 }
