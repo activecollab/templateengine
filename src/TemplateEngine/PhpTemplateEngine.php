@@ -9,7 +9,6 @@
 namespace ActiveCollab\TemplateEngine\TemplateEngine;
 
 use ActiveCollab\TemplateEngine\TemplateEngine;
-use InvalidArgumentException;
 use RuntimeException;
 
 /**

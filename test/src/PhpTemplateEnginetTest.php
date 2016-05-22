@@ -20,6 +20,9 @@ class PhpTemplateEnginetTest extends TestCase
      */
     private $template_engine;
 
+    /**
+     * {@inheritdoc}
+     */
     public function setUp()
     {
         parent::setUp();
@@ -43,6 +46,20 @@ class PhpTemplateEnginetTest extends TestCase
     public function testExceptionOnMissingTemplate()
     {
         $this->template_engine->fetch('not found');
+    }
+
+    /**
+     * Test attribute management.
+     */
+    public function testAttributeManagement()
+    {
+        $this->assertInternalType('array', $this->template_engine->getAttributes());
+
+        $this->template_engine->addAttribute('one', 1)->addAttribute('two', 2);
+        $this->assertEquals(['one' => 1, 'two' => 2], $this->template_engine->getAttributes());
+
+        $this->template_engine->setAttributes(['three' => 3, 'four' => 4]);
+        $this->assertEquals(['three' => 3, 'four' => 4], $this->template_engine->getAttributes());
     }
 
     /**

@@ -8,8 +8,8 @@
 
 namespace ActiveCollab\TemplateEngine;
 
-use InvalidArgumentException;
 use Exception;
+use InvalidArgumentException;
 
 /**
  * @package ActiveCollab\Controller\Response
@@ -42,6 +42,7 @@ abstract class TemplateEngine implements TemplateEngineInterface
         try {
             ob_start();
             $this->display($template, $data);
+
             return ob_get_clean();
         } catch (Exception $e) {
             ob_end_clean();
