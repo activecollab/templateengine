@@ -20,8 +20,10 @@ $template_engine->display('/mail/hello.php', ['first_name' => 'John'])
 $output = $template_engine->fetch('/mail/hello.php', ['first_name' => 'John'])
 ```
 
+## Template Sandboxing
+
 Templates are sandboxed, and can be placed only in templates directory that is specified when engine is constructed. If you try to use a template that is not in this directory, template engine will throw a `\RuntimeException`:
 
 ```php
-$template_engine->fetch('/example/../../../../etc/passwd')
+$template_engine->fetch('/example/../../../../etc/passwd'); // Will throw an exception
 ```
