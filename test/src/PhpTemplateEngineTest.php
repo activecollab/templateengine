@@ -93,10 +93,6 @@ class PhpTemplateEngineTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Template '../danger/danger-zone.php' does not exist
-     */
     public function testSandboxingToTemplatesDir()
     {
         $this->expectException(RuntimeException::class);
