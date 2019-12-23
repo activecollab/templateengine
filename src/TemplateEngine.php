@@ -16,28 +16,15 @@ use RuntimeException;
 
 abstract class TemplateEngine implements TemplateEngineInterface
 {
-    /**
-     * @var array
-     */
     private $attributes = [];
-
-    /**
-     * @var string
-     */
     private $templates_path;
 
-    /**
-     * @param string $templates_path
-     */
-    public function __construct($templates_path)
+    public function __construct(string $templates_path)
     {
         $this->setTemplatesPath($templates_path);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function fetch($template, array $data = [])
+    public function fetch(string $template, array $data = []): string
     {
         try {
             ob_start();
@@ -51,38 +38,26 @@ abstract class TemplateEngine implements TemplateEngineInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function &setAttributes(array $attributes)
+    public function setAttributes(array $attributes): TemplateEngineInterface
     {
         $this->attributes = $attributes;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function &addAttribute($key, $value)
+    public function addAttribute(string $key, $value): TemplateEngineInterface
     {
         $this->attributes[$key] = $value;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getAttribute($key)
+    public function getAttribute(string $key)
     {
         if (!isset($this->attributes[$key])) {
             return false;
@@ -91,18 +66,12 @@ abstract class TemplateEngine implements TemplateEngineInterface
         return $this->attributes[$key];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getTemplatesPath()
+    public function getTemplatesPath(): string
     {
         return $this->templates_path;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function &setTemplatesPath($templates_path)
+    public function setTemplatesPath(string $templates_path): TemplateEngineInterface
     {
         $templates_path = rtrim($templates_path, '/');
 
@@ -115,17 +84,16 @@ abstract class TemplateEngine implements TemplateEngineInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getTemplatePath($template)
+    public function getTemplatePath(string $template): string
     {
         $template_path = $this->templates_path . '/' . ltrim($template, '/');
 
         if (strpos($template_path, './')) {
             $template_path = realpath($template_path);
 
-            if (empty($template_path) || $this->templates_path != mb_substr($template_path, 0, mb_strlen($this->templates_path))) {
+            if (empty($template_path)
+                || $this->templates_path != mb_substr($template_path, 0, mb_strlen($this->templates_path))
+            ) {
                 throw new RuntimeException("Template '$template' does not exist");
             }
         }
