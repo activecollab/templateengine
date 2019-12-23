@@ -21,7 +21,7 @@ class PhpTemplateEngineTest extends TestCase
      */
     private $template_engine;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
