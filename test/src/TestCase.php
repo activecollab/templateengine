@@ -1,26 +1,21 @@
 <?php
 
 /*
- * This file is part of the Active Collab Template Engine project.
+ * This file is part of the ActiveCollab TemplateEngine project.
  *
  * (c) A51 doo <info@activecollab.com>. All rights reserved.
  */
 
+declare(strict_types=1);
+
 namespace ActiveCollab\TemplateEngine\Test;
 
-/**
- * @package ActiveCollab\TemplateEngine\Test
- */
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase as BaseTestCase;
+
+abstract class TestCase extends BaseTestCase
 {
-    /**
-     * @var string
-     */
     protected $templates_path;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);

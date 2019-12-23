@@ -6,12 +6,14 @@
  * (c) A51 doo <info@activecollab.com>. All rights reserved.
  */
 
+declare(strict_types=1);
+
 namespace ActiveCollab\TemplateEngine\Test;
 
 use ActiveCollab\TemplateEngine\TemplateEngine\PhpTemplateEngine;
+use InvalidArgumentException;
+use RuntimeException;
 
-/**
- */
 class PhpTemplateEngineTest extends TestCase
 {
     /**
@@ -19,9 +21,6 @@ class PhpTemplateEngineTest extends TestCase
      */
     private $template_engine;
 
-    /**
-     * {@inheritdoc}
-     */
     public function setUp()
     {
         parent::setUp();
@@ -30,7 +29,7 @@ class PhpTemplateEngineTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Templates path 'this one does not exist' does not exist
      */
     public function testExceptionOnMissingTemplatesDir()
@@ -39,7 +38,7 @@ class PhpTemplateEngineTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException RuntimeException
      * @expectedExceptionMessage Template 'not found' does not exist
      */
     public function testExceptionOnMissingTemplate()
@@ -52,7 +51,7 @@ class PhpTemplateEngineTest extends TestCase
      */
     public function testAttributeManagement()
     {
-        $this->assertInternalType('array', $this->template_engine->getAttributes());
+        $this->assertIsArray($this->template_engine->getAttributes());
 
         $this->template_engine->addAttribute('one', 1)->addAttribute('two', 2);
         $this->assertEquals(['one' => 1, 'two' => 2], $this->template_engine->getAttributes());
@@ -66,7 +65,12 @@ class PhpTemplateEngineTest extends TestCase
      */
     public function testNoDataRender()
     {
-        $this->assertEquals(file_get_contents($this->template_engine->getTemplatePath('no-attributes.php')), $this->template_engine->fetch('no-attributes.php'));
+        $this->assertEquals(
+            file_get_contents(
+                $this->template_engine->getTemplatePath('no-attributes.php')
+            ),
+            $this->template_engine->fetch('no-attributes.php')
+        );
     }
 
     /**
@@ -100,11 +104,14 @@ class PhpTemplateEngineTest extends TestCase
      */
     public function testRemovalOfLeadingSlashes()
     {
-        $this->assertEquals("$this->templates_path/mail/hello.php", $this->template_engine->getTemplatePath('///////mail/hello.php'));
+        $this->assertEquals(
+            "$this->templates_path/mail/hello.php",
+            $this->template_engine->getTemplatePath('///////mail/hello.php')
+        );
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException RuntimeException
      * @expectedExceptionMessage Template '../danger/danger-zone.php' does not exist
      */
     public function testSandboxingToTemplatesDir()

@@ -1,10 +1,12 @@
 <?php
 
 /*
- * This file is part of the Active Collab Template Engine project.
+ * This file is part of the ActiveCollab TemplateEngine project.
  *
  * (c) A51 doo <info@activecollab.com>. All rights reserved.
  */
+
+declare(strict_types=1);
 
 namespace ActiveCollab\TemplateEngine;
 
@@ -12,8 +14,6 @@ use Exception;
 use InvalidArgumentException;
 use RuntimeException;
 
-/**
- */
 abstract class TemplateEngine implements TemplateEngineInterface
 {
     /**
