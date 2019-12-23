@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Active Collab Template Engine project.
+ * This file is part of the ActiveCollab TemplateEngine project.
  *
  * (c) A51 doo <info@activecollab.com>. All rights reserved.
  */
@@ -28,27 +28,22 @@ class PhpTemplateEngineTest extends TestCase
         $this->template_engine = new PhpTemplateEngine($this->templates_path);
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Templates path 'this one does not exist' does not exist
-     */
     public function testExceptionOnMissingTemplatesDir()
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Templates path 'this one does not exist' does not exist");
+
         new PhpTemplateEngine('this one does not exist');
     }
 
-    /**
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Template 'not found' does not exist
-     */
     public function testExceptionOnMissingTemplate()
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("Template 'not found' does not exist");
+
         $this->template_engine->fetch('not found');
     }
 
-    /**
-     * Test attribute management.
-     */
     public function testAttributeManagement()
     {
         $this->assertIsArray($this->template_engine->getAttributes());
@@ -60,9 +55,6 @@ class PhpTemplateEngineTest extends TestCase
         $this->assertEquals(['three' => 3, 'four' => 4], $this->template_engine->getAttributes());
     }
 
-    /**
-     * Test with no data to render.
-     */
     public function testNoDataRender()
     {
         $this->assertEquals(
@@ -73,9 +65,6 @@ class PhpTemplateEngineTest extends TestCase
         );
     }
 
-    /**
-     * Test renderer with data forwarded to the template.
-     */
     public function testDataRender()
     {
         $rendered_content = $this->template_engine->fetch('/mail/hello.php', ['first_name' => 'John']);
@@ -85,9 +74,6 @@ class PhpTemplateEngineTest extends TestCase
         $this->assertEquals($rendered_content, 'Hello John.');
     }
 
-    /**
-     * Test template display.
-     */
     public function testDisplay()
     {
         ob_start();
@@ -99,9 +85,6 @@ class PhpTemplateEngineTest extends TestCase
         $this->assertEquals($rendered_content, 'Hello John.');
     }
 
-    /**
-     * Test removal of leading slash from a template name.
-     */
     public function testRemovalOfLeadingSlashes()
     {
         $this->assertEquals(
@@ -116,6 +99,9 @@ class PhpTemplateEngineTest extends TestCase
      */
     public function testSandboxingToTemplatesDir()
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("Template '../danger/danger-zone.php' does not exist");
+
         $this->template_engine->fetch('../danger/danger-zone.php');
     }
 }
