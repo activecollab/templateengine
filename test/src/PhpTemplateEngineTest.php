@@ -71,6 +71,23 @@ class PhpTemplateEngineTest extends TestCase
         $this->assertEquals('Hello John.', $rendered_content);
     }
 
+    public function testWillSanitizeVariables(): void
+    {
+        $rendered_content = $this->template_engine->fetch(
+            '/mail/hello.php',
+            [
+                'first_name' => '<a href="https://activecollab.com">ActiveCollab</a>',
+            ],
+        );
+
+        $this->assertStringEndsWith("\n", $rendered_content);
+        $rendered_content = trim($rendered_content);
+        $this->assertEquals(
+            'Hello &lt;a href=&quot;https://activecollab.com&quot;&gt;ActiveCollab&lt;/a&gt;.',
+            $rendered_content,
+        );
+    }
+
     public function testDisplay(): void
     {
         ob_start();

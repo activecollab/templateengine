@@ -12,6 +12,7 @@ namespace ActiveCollab\TemplateEngine\TemplateEngine;
 
 use ActiveCollab\TemplateEngine\TemplateEngine;
 use ActiveCollab\TemplateEngine\TemplateEngineInterface;
+use InvalidArgumentException;
 
 class PhpTemplateEngine extends TemplateEngine
 {
@@ -32,5 +33,24 @@ class PhpTemplateEngine extends TemplateEngine
     {
         extract($data);
         include $template;
+    }
+
+    protected function sanitize(mixed $str): string
+    {
+        if ($str === null)  {
+            return '';
+        }
+
+        if (is_scalar($str) || (is_object($str) && method_exists($str, '__toString'))) {
+            $str = preg_replace(
+                '/&(?!#(?:[0-9]+|x[0-9A-F]+);?)/si',
+                '&amp;',
+                (string) $str,
+            );
+
+            return str_replace(['<', '>', '"'], ['&lt;', '&gt;', '&quot;'], $str);
+        }
+
+        throw new InvalidArgumentException('$str needs to be scalar value');
     }
 }
