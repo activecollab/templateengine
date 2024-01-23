@@ -62,9 +62,14 @@ class PhpTemplateEngineTest extends TestCase
         );
     }
 
-    public function testDataRender(): void
+    public function testWillRenderData(): void
     {
-        $rendered_content = $this->template_engine->fetch('/mail/hello.php', ['first_name' => 'John']);
+        $rendered_content = $this->template_engine->fetch(
+            '/mail/hello.php',
+            [
+                'first_name' => 'John',
+            ],
+        );
 
         $this->assertStringEndsWith("\n", $rendered_content);
         $rendered_content = trim($rendered_content);
