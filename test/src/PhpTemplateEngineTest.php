@@ -16,10 +16,7 @@ use RuntimeException;
 
 class PhpTemplateEngineTest extends TestCase
 {
-    /**
-     * @var PhpTemplateEngine
-     */
-    private $template_engine;
+    private PhpTemplateEngine $template_engine;
 
     public function setUp(): void
     {
@@ -28,7 +25,7 @@ class PhpTemplateEngineTest extends TestCase
         $this->template_engine = new PhpTemplateEngine($this->templates_path);
     }
 
-    public function testExceptionOnMissingTemplatesDir()
+    public function testExceptionOnMissingTemplatesDir(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Templates path 'this one does not exist' does not exist");
@@ -36,7 +33,7 @@ class PhpTemplateEngineTest extends TestCase
         new PhpTemplateEngine('this one does not exist');
     }
 
-    public function testExceptionOnMissingTemplate()
+    public function testExceptionOnMissingTemplate(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage("Template 'not found' does not exist");
@@ -44,7 +41,7 @@ class PhpTemplateEngineTest extends TestCase
         $this->template_engine->fetch('not found');
     }
 
-    public function testAttributeManagement()
+    public function testAttributeManagement(): void
     {
         $this->assertIsArray($this->template_engine->getAttributes());
 
@@ -55,7 +52,7 @@ class PhpTemplateEngineTest extends TestCase
         $this->assertEquals(['three' => 3, 'four' => 4], $this->template_engine->getAttributes());
     }
 
-    public function testNoDataRender()
+    public function testNoDataRender(): void
     {
         $this->assertEquals(
             file_get_contents(
@@ -65,16 +62,16 @@ class PhpTemplateEngineTest extends TestCase
         );
     }
 
-    public function testDataRender()
+    public function testDataRender(): void
     {
         $rendered_content = $this->template_engine->fetch('/mail/hello.php', ['first_name' => 'John']);
 
         $this->assertStringEndsWith("\n", $rendered_content);
         $rendered_content = trim($rendered_content);
-        $this->assertEquals($rendered_content, 'Hello John.');
+        $this->assertEquals('Hello John.', $rendered_content);
     }
 
-    public function testDisplay()
+    public function testDisplay(): void
     {
         ob_start();
         $this->template_engine->display('/mail/hello.php', ['first_name' => 'John']);
@@ -82,10 +79,10 @@ class PhpTemplateEngineTest extends TestCase
 
         $this->assertStringEndsWith("\n", $rendered_content);
         $rendered_content = trim($rendered_content);
-        $this->assertEquals($rendered_content, 'Hello John.');
+        $this->assertEquals('Hello John.', $rendered_content);
     }
 
-    public function testRemovalOfLeadingSlashes()
+    public function testRemovalOfLeadingSlashes(): void
     {
         $this->assertEquals(
             "$this->templates_path/mail/hello.php",
@@ -93,7 +90,7 @@ class PhpTemplateEngineTest extends TestCase
         );
     }
 
-    public function testSandboxingToTemplatesDir()
+    public function testSandboxingToTemplatesDir(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage("Template '../danger/danger-zone.php' does not exist");

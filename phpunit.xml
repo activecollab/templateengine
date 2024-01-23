@@ -1,18 +1,8 @@
-<phpunit bootstrap="./test/bootstrap.php"
-         backupGlobals="false"
-         backupStaticAttributes="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         stopOnError="false"
-         stopOnFailure="false"
-         stopOnIncomplete="false"
-         stopOnSkipped="false"
-         processIsolation="false"
-         colors="true">
-    <testsuites>
-        <testsuite name="TemplateEngine">
-            <directory>./test/src</directory>
-        </testsuite>
-    </testsuites>
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./test/bootstrap.php" backupGlobals="false" stopOnError="false" stopOnFailure="false" stopOnIncomplete="false" stopOnSkipped="false" processIsolation="false" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache" backupStaticProperties="false">
+  <testsuites>
+    <testsuite name="TemplateEngine">
+      <directory>./test/src</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

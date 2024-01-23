@@ -14,11 +14,11 @@ use PHPUnit\Framework\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    protected $templates_path;
+    protected string $templates_path;
 
-    public function __construct($name = null, array $data = [], $dataName = '')
+    public function __construct(string $name)
     {
-        parent::__construct($name, $data, $dataName);
+        parent::__construct($name);
 
         $this->templates_path = dirname(__DIR__) . '/templates';
     }
