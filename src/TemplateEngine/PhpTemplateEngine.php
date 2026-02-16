@@ -29,7 +29,7 @@ class PhpTemplateEngine extends TemplateEngine
         return $this;
     }
 
-    protected function protectedIncludeScope($template, array $data)
+    protected function protectedIncludeScope(string $template, array $data): void
     {
         extract($data);
         include $template;

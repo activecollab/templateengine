@@ -16,8 +16,8 @@ use RuntimeException;
 
 abstract class TemplateEngine implements TemplateEngineInterface
 {
-    private $attributes = [];
-    private $templates_path;
+    private array $attributes = [];
+    private string $templates_path;
 
     public function __construct(string $templates_path)
     {
